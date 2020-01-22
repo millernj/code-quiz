@@ -13,17 +13,21 @@
 <body>
   <nav class="navbar">
     <a href="">View Highscores</a>
-    <span class="timer">
-      Time: 0
+    <span id="timer">
+      Time: <code>00</code>
     </span>
   </nav>
   <div class="container">
-    <h1 class="title">Coding Quiz Challenge</h1>
-    <p class="intro-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores maiores culpa libero itaque assumenda nam ab autem tenetur ipsa mollitia. Dolores doloremque ducimus distinctio consequatur nostrum fuga autem quae tempore.</p>
+    <h1 class="opener title">Coding Quiz Challenge</h1>
+    <h5 class="opener intro-text">Try to answer the following code-related questions within the time limit. Keep in mind that
+      incorrect answers will penalize your score/time by ten seconds!</h5>
     <div class="d-flex justify-content-center">
-      <button type="button" class="btn btn-primary">Quiz Start</button>
+      <button id="start-button" type="button" class="opener btn btn-primary">Quiz Start</button>
     </div>
   </div>
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="./assets/questions.js"></script>
   <script src="./script.js"></script>
 </body>
 

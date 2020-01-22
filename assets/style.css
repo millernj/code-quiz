@@ -9896,6 +9896,22 @@ a, a:hover {
   text-decoration-line: none;
 }
 
+ol {
+  margin-top: 1rem;
+}
+
+li {
+  margin: 0.25rem;
+  font-weight: bold;
+  list-style-type: lower-alpha;
+}
+
+code {
+  background-color: #e2d9f3;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+}
+
 .intro-text, .title {
   text-align: center;
 }

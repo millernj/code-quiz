@@ -1,5 +1,6 @@
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
 
 $theme-colors: (
   "primary": $purple
@@ -7,9 +8,41 @@ $theme-colors: (
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+
+@function gray($key: "100") {
+  @return map-get($grays, $key);
+}
+
+@function theme-color-level($color-name: "primary", $level: 0) {
+  $color: theme-color($color-name);
+  $color-base: if($level > 0, #000, #fff);
+  $level: abs($level);
+
+  @return mix($color-base, $color, $level * $theme-color-interval);
+}
+
 a, a:hover {
   color: map-get($theme-colors, "primary");
   text-decoration-line: none;
+}
+
+ol {
+  margin-top: 1rem;
+}
+
+li {
+  margin: 0.25rem;
+  font-weight: bold;
+  list-style-type: lower-alpha;
+}
+
+code {
+  background-color: theme-color-level($level: -10);
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
 }
 
 .intro-text, .title {
