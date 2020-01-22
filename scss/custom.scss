@@ -1,0 +1,17 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$theme-colors: (
+  "primary": $purple
+);
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+a, a:hover {
+  color: map-get($theme-colors, "primary");
+  text-decoration-line: none;
+}
+
+.intro-text, .title {
+  text-align: center;
+}
