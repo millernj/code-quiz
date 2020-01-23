@@ -41,8 +41,18 @@ function renderQuestion (entry) {
   question.innerHTML = addBlankSpace(entry.question);
   
   let options = document.createElement('ol');
-  
-  entry.options.shuffle().forEach((answer) => {
+
+  let answers = entry.options;
+
+  // ensuring 'All of the above' is always the last option
+  let aoaIndex = answers.indexOf('All of the above');
+  if (aoaIndex > -1) {
+    answers.splice(aoaIndex, 1);
+    answers.shuffle();
+    answers.push('All of the above');
+  }
+
+  answers.forEach((answer) => {
     let option = document.createElement('li');
     let button = document.createElement('button');
   
@@ -60,7 +70,7 @@ function renderQuestion (entry) {
           currentQuestionIndex++;
           renderQuestion(questions[currentQuestionIndex])
         } else {
-
+          // show results screen
         }
       }
     }
@@ -68,9 +78,18 @@ function renderQuestion (entry) {
     option.appendChild(button);
     options.appendChild(option);
   })
-  
-  container.appendChild(question);
-  container.appendChild(options);
+
+  // replacing elements rather than hiding old ones
+  const previousQuestion = container.querySelector('h2');
+  const previousOptions = container.querySelector('ol');
+
+  if (previousQuestion || previousOptions) {
+    previousQuestion.replaceWith(question);
+    previousOptions.replaceWith(options);
+  } else {
+    container.appendChild(question);
+    container.appendChild(options);
+  }
 }
 
 function renderTime() {

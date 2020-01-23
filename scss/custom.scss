@@ -41,7 +41,8 @@ li {
 
 code {
   background-color: theme-color-level($level: -10);
-  padding: 0 0.25rem;
+  color: theme-color-level('danger', 3);
+  padding: 0.25rem;
   border-radius: 0.25rem;
 }
 

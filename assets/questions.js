@@ -8,5 +8,15 @@ let questions = [
       'the <code>==</code> operator assigns values locally while <code>=</code> assigns them globally',
     ],
     answer: 'the <code>==</code> operator compares values while <code>=</code> assigns them'
+  },
+  {
+    question: 'Which of these statements initailize an empty array?',
+    options: [
+      '<code>var array = Array();</code>',
+      '<code>var array = [];</code>',
+      '<code>var array = \'\'.split(\'\');</code>',
+      'All of the above'
+    ],
+    answer: 'All of the above'
   }
 ]
