@@ -1,8 +1,10 @@
 const container = document.querySelector('.container');
 const startButton = document.querySelector('#start-button');
+const restartButton = document.querySelector('#restart-button');
 const timer = document.querySelector('#timer');
 
 let secondsRemaining = 15 * questions.length;
+let score;
 let interval;
 let currentQuestionIndex = 0;
 
@@ -23,11 +25,11 @@ Array.prototype.shuffle = function () {
 function toggleElements(selector) {
   const elements = document.querySelectorAll(selector);
   elements.forEach((element) => {
-    let { style: { display } } = element
-    if (display) {
-      delete element.style.display;
+    let { className } = element
+    if (className.split(" ").includes('hidden')) {
+      element.className = className.replace(/\bhidden\b/g, '');
     } else {
-      element.setAttribute('style', 'display: none;');
+      element.className += " hidden";
     }
   })
 }
@@ -50,6 +52,8 @@ function renderQuestion (entry) {
     answers.splice(aoaIndex, 1);
     answers.shuffle();
     answers.push('All of the above');
+  } else {
+    answers.shuffle();
   }
 
   answers.forEach((answer) => {
@@ -70,11 +74,13 @@ function renderQuestion (entry) {
           currentQuestionIndex++;
           renderQuestion(questions[currentQuestionIndex])
         } else {
-          // show results screen
+          container.querySelector('h2').remove();
+          container.querySelector('ol').remove();
+          renderFinish();
         }
       }
     }
-  
+
     option.appendChild(button);
     options.appendChild(option);
   })
@@ -92,6 +98,13 @@ function renderQuestion (entry) {
   }
 }
 
+function renderFinish () {
+  const finalScore = document.getElementById('final-score');
+  score = secondsRemaining;
+  finalScore.innerHTML = score;
+  toggleElements('.success');
+}
+
 function renderTime() {
   timer.innerHTML = `Time: <code>${secondsRemaining.toString().length > 1 ? secondsRemaining : '0' + secondsRemaining}</code>`;
 
@@ -104,16 +117,27 @@ function renderTime() {
 function stopTimer() {
   clearInterval(interval);
   secondsRemaining = 15 * questions.length;
+  container.querySelector('h2').remove();
+  container.querySelector('ol').remove();
+  toggleElements('.failure');
 }
 
-startButton.onclick = () => {
-  toggleElements('.opener');
-  renderTime();
-  interval = setInterval(function() {
-    secondsRemaining--;
+if (startButton) {
+  startButton.onclick = () => {
+    toggleElements('.opener');
     renderTime();
-  }, 1000);
-  questions = questions.shuffle();
-  renderQuestion(questions[currentQuestionIndex])
+    interval = setInterval(function() {
+      secondsRemaining--;
+      renderTime();
+    }, 1000);
+    questions = questions.shuffle();
+    renderQuestion(questions[currentQuestionIndex])
+  }
 }
 
+if (restartButton) {
+  restartButton.onclick = () => {
+    toggleElements('.failure');
+    toggleElements('.opener');
+  }
+}

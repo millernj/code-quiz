@@ -9913,8 +9913,12 @@ code {
   border-radius: 0.25rem;
 }
 
-.intro-text, .title {
+.intro-text, .failure-text, .title {
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
