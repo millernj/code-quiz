@@ -31,10 +31,10 @@
     </div>
     <h1 class="success hidden">All Done!</h1>
     <h5 class="success hidden result-text">Your final score is:  <span id='final-score'></span></h5>
-    <form class="success hidden">
+    <form class="success hidden" onsubmit="window.location = './highscores.html'; return false;">
       <label for="user-initials">Enter Initials: </label>
       <input id="user-initials" type="text" name="name"></input>
-      <input type="submit" class="btn btn-primary" value="Submit">
+      <input type="submit" class="btn btn-primary" value="Submit" onclick="saveHighscore();">
     </form>
   </div>
   <script src="./node_modules/jquery/dist/jquery.js"></script>

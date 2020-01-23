@@ -18,13 +18,10 @@
     </span>
   </nav>
   <div class="container">
-    <h1 class="success">All Done!</h1>
-    <h5 class="success result-text">Your final score is:<span id='final-score'></span></h5>
-    <form class="success">
-      <label for="user-initials">Enter Initials: </label>
-      <input id="user-initials" type="text" name="name"></input>
-      <input type="submit" class="btn btn-primary" value="Submit">
-    </form>
+    <h1>Highscores</h1>
+    <ol id="highscores"></ol>
+    <button type="button" class="btn btn-primary" onclick="window.location = './index.html'">Go Back</button>
+    <button id="clear-scores" type="button" class="btn btn-primary" onclick="clearScores();">Clear Highscores</button>
   </div>
   <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>

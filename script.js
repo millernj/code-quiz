@@ -2,6 +2,7 @@ const container = document.querySelector('.container');
 const startButton = document.querySelector('#start-button');
 const restartButton = document.querySelector('#restart-button');
 const timer = document.querySelector('#timer');
+const highscoreList = document.querySelector('#highscores');
 
 let secondsRemaining = 15 * questions.length;
 let score;
@@ -60,6 +61,7 @@ function renderQuestion (entry) {
     let option = document.createElement('li');
     let button = document.createElement('button');
   
+    option.setAttribute('class', 'answer-option');
     button.setAttribute('type', 'button');
     button.setAttribute('class', 'btn btn-primary');
   
@@ -74,8 +76,6 @@ function renderQuestion (entry) {
           currentQuestionIndex++;
           renderQuestion(questions[currentQuestionIndex])
         } else {
-          container.querySelector('h2').remove();
-          container.querySelector('ol').remove();
           renderFinish();
         }
       }
@@ -99,6 +99,7 @@ function renderQuestion (entry) {
 }
 
 function renderFinish () {
+  stopTimer();
   const finalScore = document.getElementById('final-score');
   score = secondsRemaining;
   finalScore.innerHTML = score;
@@ -111,19 +112,67 @@ function renderTime() {
   if (secondsRemaining <= 0) {
     timer.innerHTML = `Time: <code>00</code>`;
     stopTimer();
+    toggleElements('.failure');
   }
 }
 
 function stopTimer() {
   clearInterval(interval);
-  secondsRemaining = 15 * questions.length;
   container.querySelector('h2').remove();
   container.querySelector('ol').remove();
-  toggleElements('.failure');
+}
+
+function saveHighscore() {
+  const { value: userInitials } = document.getElementById('user-initials');
+  let highscores = localStorage.getItem('highscores');
+  let scoreEntry = {
+    name: userInitials,
+    score,
+    date: new Date()
+  };
+
+  if (highscores) {
+    highscores = JSON.parse(highscores);
+    highscores.push(scoreEntry)
+    localStorage.setItem(`highscores`, JSON.stringify(highscores));
+  } else {
+    localStorage.setItem('highscores', JSON.stringify([scoreEntry]))
+  }
+}
+
+function clearScores () {
+  delete localStorage.highscores;
+  if (highscoreList.childElementCount) {
+    Array.from(highscoreList.children).forEach((child) => {
+      highscoreList.removeChild(child);
+    })
+  }
+  renderHighscores();
+}
+
+function renderHighscores() {
+  let highscores = localStorage.getItem('highscores');
+  if (highscores) {
+    highscores = JSON.parse(highscores).sort((currentEntry, nextEntry) => {
+      return nextEntry.score - currentEntry.score;
+    });
+    for (const entry of highscores) {
+      let { name, score, date } = entry;
+      date = new Date(date);
+      const item = document.createElement("li");
+      const div = document.createElement("div");
+      item.setAttribute('class', 'score');
+      div.setAttribute('class', 'd-flex justify-content-around');
+      div.innerHTML = `<div>${[name, score, date.toLocaleString('en-US')].join('</div><div>')}</div>`;
+      item.appendChild(div);
+      highscoreList.appendChild(item);
+    }
+  }
 }
 
 if (startButton) {
   startButton.onclick = () => {
+    secondsRemaining = 15 * questions.length;
     toggleElements('.opener');
     renderTime();
     interval = setInterval(function() {
@@ -140,4 +189,8 @@ if (restartButton) {
     toggleElements('.failure');
     toggleElements('.opener');
   }
+}
+
+if (highscoreList) {
+  renderHighscores();
 }

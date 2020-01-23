@@ -9900,10 +9900,17 @@ ol {
   margin-top: 1rem;
 }
 
-li {
+li.answer-option {
   margin: 0.25rem;
   font-weight: bold;
   list-style-type: lower-alpha;
+}
+
+li.score {
+  margin: 0.25rem;
+  padding: 0 0.25rem;
+  font-weight: bold;
+  background-color: #e2d9f3;
 }
 
 code {
