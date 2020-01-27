@@ -53,7 +53,7 @@ function renderQuestion (entry) {
     answers.splice(aoaIndex, 1);
     answers.shuffle();
     answers.push('All of the above');
-  } else {
+  } else if (answers.indexOf('True') === -1) {
     answers.shuffle();
   }
 
