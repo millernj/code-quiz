@@ -162,8 +162,10 @@ function renderHighscores() {
       const item = document.createElement("li");
       const div = document.createElement("div");
       item.setAttribute('class', 'score');
-      div.setAttribute('class', 'd-flex justify-content-around');
-      div.innerHTML = `<div>${[name, score, date.toLocaleString('en-US')].join('</div><div>')}</div>`;
+      div.setAttribute('class', 'row');
+      [name, score, date.toLocaleString('en-US')].forEach((item) => {
+        div.innerHTML+=`<div class="col-4 d-flex justify-content-center">${item}</div>`
+      })
       item.appendChild(div);
       highscoreList.appendChild(item);
     }
