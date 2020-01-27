@@ -68,7 +68,7 @@ function renderQuestion (entry) {
     button.innerHTML = answer;
     if (answer !== entry.answer) {
       button.onclick = () => {
-        secondsRemaining -= 10;
+        secondsRemaining -= 15;
       }
     } else {
       button.onclick = () => {
